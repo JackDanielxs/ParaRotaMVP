@@ -1,7 +1,5 @@
 # ParaRota: Monitoramento de Tempo Parado em Roteiros
 
-2026-09-17 · Daniel Matos Marques
-
 ParaRota é o MVP de monitoramento de tempo parado em roteiros de entrega. Este documento traz a especificação de casos de uso, diagrama de robustez e diagrama de classes conceitual da 1ª parte do projeto.
 
 ## 1. Casos de Uso
