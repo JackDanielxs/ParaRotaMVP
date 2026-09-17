@@ -1,4 +1,4 @@
-# ParaRota: MVP de Monitoramento de Tempo Parado em Roteiros
+# ParaRota: Monitoramento de Tempo Parado em Roteiros
 
 2026-09-17 · Daniel Matos Marques
 
