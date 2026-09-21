@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ParaRota — Monitoramento de Tempo Parado em Roteiros</title>
+<link rel="stylesheet" href="/static/style.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">◐</span>
+    <div>
+      <h1>ParaRota</h1>
+      <p>Monitoramento de tempo parado em roteiros</p>
+    </div>
+  </div>
+  <nav id="tabs">
+    <button data-tab="dashboard" class="tab-btn active">Dashboard</button>
+    <button data-tab="roteiros" class="tab-btn">Roteiros</button>
+    <button data-tab="registro" class="tab-btn">Registrar Ponto</button>
+    <button data-tab="cadastros" class="tab-btn">Cadastros</button>
+    <button data-tab="parametros" class="tab-btn">Parâmetros</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- DASHBOARD (UC08) -->
+  <section id="tab-dashboard" class="tab-panel active">
+    <div class="filters">
+      <label>De <input type="date" id="dashInicio" /></label>
+      <label>Até <input type="date" id="dashFim" /></label>
+      <label>Motorista
+        <select id="dashMotorista"><option value="">Todos</option></select>
+      </label>
+      <button id="btnAtualizarDashboard" class="primary">Atualizar</button>
+      <a id="btnExportar" class="secondary" href="#">Exportar CSV</a>
+    </div>
+
+    <div class="cards">
+      <div class="card"><span class="card-label">Roteiros no período</span><span class="card-value" id="kpiRoteiros">–</span></div>
+      <div class="card"><span class="card-label">Tempo parado total</span><span class="card-value" id="kpiTempoTotal">–</span></div>
+      <div class="card"><span class="card-label">Tempo médio parado / roteiro</span><span class="card-value" id="kpiTempoMedio">–</span></div>
+      <div class="card"><span class="card-label">% médio da jornada parado</span><span class="card-value" id="kpiPercentual">–</span></div>
+      <div class="card"><span class="card-label">Custo total estimado</span><span class="card-value" id="kpiCusto">–</span></div>
+    </div>
+
+    <div class="charts">
+      <div class="chart-box">
+        <h3>Tempo parado por dia</h3>
+        <canvas id="chartPorDia"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>Tempo parado por mês</h3>
+        <canvas id="chartPorMes"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>Pontos com mais tempo parado</h3>
+        <canvas id="chartTopPontos"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROTEIROS (UC04, UC07) -->
+  <section id="tab-roteiros" class="tab-panel">
+    <div class="grid-2">
+      <div class="panel">
+        <h2>Montar novo roteiro (UC04)</h2>
+        <form id="formRoteiro">
+          <label>Data <input type="date" id="roteiroData" required /></label>
+          <label>Motorista/Motoboy
+            <select id="roteiroMotorista" required></select>
+          </label>
+          <label>Distância total (km) <input type="number" id="roteiroDistancia" step="0.1" min="0" required /></label>
+          <label>Pontos (selecione na ordem: 1º = partida)
+            <select id="roteiroPontosDisponiveis"></select>
+            <button type="button" id="btnAddPonto" class="secondary">Adicionar ponto</button>
+          </label>
+          <ol id="listaPontosSelecionados" class="pontos-selecionados"></ol>
+          <button type="submit" class="primary">Salvar roteiro</button>
+        </form>
+        <p id="roteiroMsg" class="msg"></p>
+      </div>
+
+      <div class="panel">
+        <h2>Histórico de roteiros (UC07)</h2>
+        <div id="listaRoteiros" class="lista-roteiros"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTRO DE PONTO (UC05) -->
+  <section id="tab-registro" class="tab-panel">
+    <div class="panel">
+      <h2>Registrar chegada/saída no ponto (UC05)</h2>
+      <label>Roteiro
+        <select id="registroRoteiro"></select>
+      </label>
+      <div id="registroPontosLista"></div>
+      <p id="registroMsg" class="msg"></p>
+    </div>
+  </section>
+
+  <!-- CADASTROS (UC01, UC02, UC03) -->
+  <section id="tab-cadastros" class="tab-panel">
+    <div class="grid-2">
+      <div class="panel">
+        <h2>Novo Motorista/Motoboy (UC01)</h2>
+        <form id="formMotorista">
+          <label>Nome <input type="text" id="motNome" required /></label>
+          <label>Telefone <input type="text" id="motTelefone" /></label>
+          <label>Documento <input type="text" id="motDocumento" /></label>
+          <label>Veículo <input type="text" id="motVeiculo" /></label>
+          <label>Rendimento (km/litro) <input type="number" id="motRendimento" step="0.1" min="0.1" required /></label>
+          <button type="submit" class="primary">Cadastrar</button>
+        </form>
+        <p id="motMsg" class="msg"></p>
+      </div>
+
+      <div class="panel">
+        <h2>Novo Gerente/Coordenador (UC02)</h2>
+        <form id="formGerente">
+          <label>Nome <input type="text" id="gerNome" required /></label>
+          <label>Telefone <input type="text" id="gerTelefone" /></label>
+          <label>E-mail <input type="email" id="gerEmail" required /></label>
+          <button type="submit" class="primary">Cadastrar</button>
+        </form>
+        <p id="gerMsg" class="msg"></p>
+      </div>
+
+      <div class="panel">
+        <h2>Novo Ponto (UC03)</h2>
+        <form id="formPonto">
+          <label>Endereço <input type="text" id="pontoEndereco" required /></label>
+          <label>Latitude <input type="number" id="pontoLat" step="0.000001" /></label>
+          <label>Longitude <input type="number" id="pontoLng" step="0.000001" /></label>
+          <button type="submit" class="primary">Cadastrar</button>
+        </form>
+        <p id="pontoMsg" class="msg"></p>
+      </div>
+
+      <div class="panel">
+        <h2>Motoristas e pontos cadastrados</h2>
+        <div id="listaCadastros"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARÂMETROS (UC09, UC10) -->
+  <section id="tab-parametros" class="tab-panel">
+    <div class="panel">
+      <h2>Parâmetros de custo e jornada (UC09/UC10)</h2>
+      <form id="formParametros">
+        <label>Valor do combustível (R$/litro) <input type="number" id="parCombustivel" step="0.01" min="0" required /></label>
+        <label>Km/litro padrão <input type="number" id="parKmLitro" step="0.1" min="0.1" required /></label>
+        <label>Custo adicional por km (R$) <input type="number" id="parCustoKm" step="0.01" min="0" required /></label>
+        <label>Jornada padrão (horas/dia) <input type="number" id="parJornada" step="0.5" min="0.5" required /></label>
+        <button type="submit" class="primary">Salvar parâmetros</button>
+      </form>
+      <p id="parMsg" class="msg"></p>
+    </div>
+  </section>
+
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

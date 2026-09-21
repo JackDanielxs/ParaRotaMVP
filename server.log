@@ -1,0 +1,24 @@
+INFO:     Started server process [509]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:53726 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43816 - "POST /api/usuarios HTTP/1.1" 201 Created
+INFO:     127.0.0.1:43818 - "POST /api/usuarios HTTP/1.1" 201 Created
+INFO:     127.0.0.1:43820 - "POST /api/pontos HTTP/1.1" 201 Created
+INFO:     127.0.0.1:43836 - "POST /api/pontos HTTP/1.1" 201 Created
+INFO:     127.0.0.1:43848 - "POST /api/pontos HTTP/1.1" 201 Created
+INFO:     127.0.0.1:43856 - "PUT /api/parametros HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43864 - "POST /api/roteiros HTTP/1.1" 201 Created
+INFO:     127.0.0.1:43878 - "POST /api/roteiros HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:56494 - "PUT /api/roteiros/1/pontos/2/registro HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56506 - "PUT /api/roteiros/1/pontos/3/registro HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56516 - "PUT /api/roteiros/1/pontos/1/registro HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56518 - "GET /api/roteiros HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56520 - "GET /api/dashboard?data_inicio=2026-09-01&data_fim=2026-09-30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56522 - "GET /api/relatorios/exportar?data_inicio=2026-09-01&data_fim=2026-09-30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56524 - "PUT /api/parametros HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:56530 - "POST /api/usuarios HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:56542 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56554 - "GET /static/app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56570 - "GET /static/style.css HTTP/1.1" 200 OK
