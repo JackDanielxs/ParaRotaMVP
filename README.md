@@ -1,7 +1,7 @@
-# ParaRota — MVP de Monitoramento de Tempo Parado em Roteiros
+# ParaRota - MVP de Monitoramento de Tempo Parado em Roteiros
 
-MVP desenvolvido para o 2º Trabalho Avaliativo de Engenharia de Software II
-(Prof. Sandro Laudares), implementando o backlog especificado no documento
+MVP desenvolvido para o 2º Trabalho Avaliativo de Engenharia de Software II, 
+implementando o backlog especificado no documento
 de requisitos e no Projeto Preliminar (casos de uso, diagrama de robustez e
 diagrama de classes conceitual).
 
